@@ -6,20 +6,26 @@ CrowdStrike’s Falcon X threat intelligence and Falcon Endpoint Protection devi
 While running, the integration maintains a collection of malicious URLs from CrowdStrike’s Intel platform by submitting new URLs and removing false positives, or deleted indicators, from the Zscaler platform’s URL block list feature. The integration is rate limited by Zscaler’s URL look-up API. Only 40,000 URLs can be queried per hour, so the integration was designed assuming that the service bottle necks at this particular phase of execution. The result is a slow and steady Extract-Transform-Load loop built for stability. 
 
 # Getting Started
-## Zscaler URL Category
-First, log into your ZIA tenant and then navigate to “Administration” -> “URL-Categories", and then add a new URL category with the name 'CrowdStrike Malicious URLs - High', in the URL Super Category select 'User-Defined'. The new category will not be accepted without any entries, so enter an arbitrary URL, and then save.
-
-[Zscaler URL Category documentation](https://help.zscaler.com/zia/adding-custom-url-categories)
 
 ## Download
 ```bash
 git clone https://github.com/CrowdStrike/zscaler-FalconX-integration.git
 cd zscaler-FalconX-integration
 ```
+
+## Zscaler URL Category
+First, log into your ZIA tenant and then navigate to “Administration” -> “URL-Categories", and then add a new URL category with the name 'CrowdStrike Malicious URLs - High', in the URL Super Category select 'User-Defined'. The new category will not be accepted without any entries, so enter an arbitrary URL, and then save.
+
+[Zscaler URL Category documentation](https://help.zscaler.com/zia/adding-custom-url-categories)
+
+## CrowdStrike OAuth2 Token Scope
+In the Falcon UI, navigate to API Clients and Keys. Then, click Add a New API Client. Create a client with READ permissions for Indicators (Falcon X). Save the resulting values, as they will be used in the config file (cs_clientID, cs_secret, cs_base_url).
+
 ## Launch the Integration
 Enter missing configuration values in config.py
 - cs_clientID 
 - cs_secret 
+- cs_base_url
 - zs_username 
 - zs_password 
 - zs_apiKey 
