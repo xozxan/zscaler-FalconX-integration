@@ -36,6 +36,9 @@ class Category():
         except (requests.exceptions.Timeout, requests.exceptions.TooManyRedirects, requests.exceptions.HTTPError, requests.exceptions.RequestException) as e:
             sys.exit()
 
+        """
+        The line below need to be handled better. If the user doesn't have correct API permissions it will return a dictionary so it will pass the check "if len(custom_url_cat.json()) == 0:" and then fail in the loop below
+        """
         custom_cats = custom_url_cat.json()
 
         if len(custom_url_cat.json()) == 0:
